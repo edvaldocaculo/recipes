@@ -5,10 +5,9 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from authors.forms import LoginForms, RegisterForm
 from authors.forms.recipe_form import AuthorRecipeForm
 from recipes.models import Recipe
-
-from .forms import LoginForms, RegisterForm
 
 # Create your views here.
 
@@ -53,8 +52,8 @@ def login_views(request):
 def login_create(request):
     if not request.POST:
         raise Http404()
-
-    form = LoginForms(request.POST)
+    POST = request.POST
+    form = LoginForms(POST)
     # login_url = reverse('login')
 
     if form.is_valid():
@@ -96,7 +95,7 @@ def dashboard(request):
     recipes = Recipe.objects.filter(
         is_published=False,
         author=request.user
-    )
+    ).order_by('-id')
     return render(
         request,
         'authors/pages/dashboard.html',
@@ -130,7 +129,7 @@ def dashboard_recipe_edit(request, id):
     if form.is_valid():
         # Agora, o form é válido e eu posso tentar salvar na zona do admin
         recipe = form.save(commit=False)
-
+        # dados que não foram usados no form de recipes para serem editados
         recipe.author = request.user
         recipe.preparation_steps_is_html = False
         recipe.is_published = False
@@ -153,6 +152,7 @@ def dashboard_recipe_edit(request, id):
 # ------------------------------------------------------------
 
 
+"""
 @login_required(login_url='login', redirect_field_name='next')
 def dashboard_recipe_new(request):
     form = AuthorRecipeForm(
@@ -182,7 +182,7 @@ def dashboard_recipe_new(request):
             'form_action': reverse('dashboard_recipe_new')
         }
     )
-
+"""
 # -------------------------------------------------------------
 # Apagar uma receita
 # -------------------------------------------------------------

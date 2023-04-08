@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'INSECURE')
 DEBUG = True
 DEBUG = True if os.environ.get('DEBUG') == '1' else False
 
-ALLOWED_HOSTS: list[str] = []  # type: ignore
+ALLOWED_HOSTS: list[str] = ['*']  # type: ignore
 
 
 # Application definition

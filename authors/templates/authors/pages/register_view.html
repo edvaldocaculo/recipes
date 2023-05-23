@@ -3,6 +3,7 @@
 {% block title %}Register |{% endblock title %}
 {% block content %}
 <div class="main-content container center">
+    {% csrf_token %}
     <h2>REGISTER</h2>
 </div>
 {% include 'global/partials/messages.html' %}

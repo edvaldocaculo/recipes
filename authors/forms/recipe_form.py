@@ -29,7 +29,6 @@ class AuthorRecipeForm(forms.ModelForm):
                 choices=(
                         ('Porções', 'Porções'),
                         ('Pedaços', 'Pedaços'),
-                        ('Pessoas', 'Pessoas'),
                 ),
             ),
             'preparation_time_unit': forms.Select(
@@ -48,8 +47,8 @@ class AuthorRecipeForm(forms.ModelForm):
         description = cd.get('description')
 
         if title == description:
-            self._my_errors['title'].append('Cannot be equal to description')
-            self._my_errors['description'].append('Cannot be equal to title')
+            self._my_errors['title'].append('Can not be equal to description')
+            self._my_errors['description'].append('Can not be equal to title')
 
         if self._my_errors:
             raise forms.ValidationError(self._my_errors)
